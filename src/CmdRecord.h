@@ -20,14 +20,18 @@ public:
 	void	Set_Address(std::string);
 	std::string	Get_Address() const;
 	// Debating how to handle "data" variable...
+    //possibly create separate class/structure for data?????
 	// void Set_Data(string[]);
-	// string Get_Data() cosnt;
+	// string Get_Data() const;    
+    //void	Set_Total_Words(std::string);
+	//std::string	Get_Total_Words() const;
 	void	Set_Size(std::string);
 	std::string	Get_Size() const;
 	void	Set_Cycle(std::string);
 	std::string	Get_Cycle() const;
 	void	Set_RelTime(std::string);
 	std::string  Get_RelTime() const;
+
 	CmdRecord operator=(const CmdRecord &other);
 
 private: // All data members are assumed to be strings
@@ -37,4 +41,5 @@ private: // All data members are assumed to be strings
 	std::string size;
 	std::string cycle;
 	std::string reltime;
+    //std::string total_words;
 }; // end of CmdRecord class

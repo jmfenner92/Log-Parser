@@ -128,13 +128,33 @@ void CmdList::Display() const
 		// display command type
 		if(temp->info.Get_Address() == "0x40000810")
 		{
-			std::cout << "S-t0-D command: ";
+			std::cout << "S-to-D command: ";
 		}
 		else
 		{
 			std::cout << "D-to-S command: ";
 		}
 
-		// Need to display number of words and any data...
+        //Display number of words
+        std::cout << info.Get_Total_Words << " words" << endl;
+
+		//Display data...
+        
+        //while loop?
+        {
+            //Display line number for individual word commands
+		    //std::cout << temp->info.Get_Line_Number() << ": ";
+            //Display word number (i.e. Word 41:)
+            //std::cout << " Word " <<  WORD NUMBER << ": ";
+            //std::cout << COMMAND << endl;
+        }
+        
+        //create blank line for next command
+        std::cout << endl;
 	}
 } // end of Display()
+
+
+
+
+
