@@ -28,6 +28,7 @@ public:
 	std::string	Get_Cycle() const;
 	void	Set_RelTime(std::string);
 	std::string  Get_RelTime() const;
+	CmdRecord operator=(const CmdRecord &other);
 
 private: // All data members are assumed to be strings
 	std::string line_number;

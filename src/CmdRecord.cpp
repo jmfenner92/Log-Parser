@@ -78,3 +78,13 @@ std::string CmdRecord::Get_RelTime() const
 	return reltime;
 }
 
+CmdRecord CmdRecord::operator=(const CmdRecord &other)
+{
+	line_number = other.Get_Line_Number();
+	address = other.Get_Address();
+	// add something for data
+	size = other.Get_Size();
+	cycle = other.Get_Cycle();
+	reltime = other.Get_RelTime();
+}
+
