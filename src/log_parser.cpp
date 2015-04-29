@@ -11,6 +11,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <string>
+#include <cmath>
 // TODO: add the team's headers later
 
 using namespace std;
@@ -32,6 +33,7 @@ int line_count = 0;
 
 // function prototypes
 void dataCollection(CmdRecord*, ifstream&);
+int lookAndAdd(string, int, int);
 
 int main(int argc, char** argv) {
 
@@ -151,3 +153,24 @@ void dataCollection(CmdRecord* curr_node, ifstream& log_file, int field_counter)
 			curr_node->CmdRecord.data[i] = curr_field;
 		}
 }
+
+//given a bitstring, return the decimal value of the given range
+int lookAndAdd(string bitString, int startRange, int endRange) {
+	int result = 0;
+	str = bitString.substr(startRange, endRange-startRange);
+	int powerCounter = len(str) - 1;
+	int indexCounter = 0;
+	while(powerCounter != -1){
+			if(str[indexCounter] == '0') {
+				indexCounter++;
+				powerCounter--;			
+			}
+			else {
+				result += exp2(powerCounter)
+				indexCounter++;
+				powerCounter--;
+			}
+	}
+	return result;
+}
+
