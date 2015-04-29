@@ -155,7 +155,7 @@ void dataCollection(CmdRecord* curr_node, ifstream& log_file, int field_counter)
 }
 
 //given a bitstring, return the decimal value of the given range
-lookAndAdd(string bitString, int startRange, int endRange) {
+int lookAndAdd(string bitString, int startRange, int endRange) {
 	int result = 0;
 	str = bitString.substr(startRange, endRange-startRange);
 	int powerCounter = len(str) - 1;
