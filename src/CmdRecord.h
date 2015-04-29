@@ -31,6 +31,7 @@ public:
 	std::string	Get_Cycle() const;
 	void	Set_RelTime(std::string);
 	std::string  Get_RelTime() const;
+    std::string HexToBit (string hex_string);
 
 	CmdRecord operator=(const CmdRecord &other);
 
