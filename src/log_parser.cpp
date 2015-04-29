@@ -158,9 +158,9 @@ void dataCollection(CmdRecord* curr_node, ifstream& log_file, int field_counter)
 lookAndAdd(string bitString, int startRange, int endRange) {
 	int result = 0;
 	str = bitString.substr(startRange, endRange-startRange);
-	int powerCounter = len(str);
+	int powerCounter = len(str) - 1;
 	int indexCounter = 0;
-	while(powerCounter != 0){
+	while(powerCounter != -1){
 			if(str[indexCounter] == '0') {
 				indexCounter++;
 				powerCounter--;			
