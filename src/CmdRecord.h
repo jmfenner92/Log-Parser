@@ -19,6 +19,8 @@ public:
 	std::string	Get_Line_Number() const;
 	void	Set_Address(std::string);
 	std::string	Get_Address() const;
+	void	Set_Data(string[]);
+	std::string Get_Data() const;
 	// Debating how to handle "data" variable...
     //possibly create separate class/structure for data?????
 	// void Set_Data(string[]);

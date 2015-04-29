@@ -14,7 +14,7 @@ CmdRecord::CmdRecord()
 {
 	line_number = "";
 	address = "";
-	// space for "data"
+	data = ""
 	size = "";
 	cycle = "";
 	reltime = "";
@@ -47,6 +47,17 @@ std::string CmdRecord::Get_Address() const
 }
 
 // Include "data" functions when way to handle data is settled...
+
+std::string CmdRecord::Set_Data() const
+{
+	data = new_data;
+}
+
+std::string CmdRecord::Get_Data() const
+{
+	return data;
+}
+
 
 void CmdRecord::Set_Size(std::string new_size)
 {
@@ -83,6 +94,7 @@ CmdRecord CmdRecord::operator=(const CmdRecord &other)
 	line_number = other.Get_Line_Number();
 	address = other.Get_Address();
 	// add something for data
+	data = other.Get_Data();
 	size = other.Get_Size();
 	cycle = other.Get_Cycle();
 	reltime = other.Get_RelTime();
