@@ -30,9 +30,10 @@ using namespace std;
 
 // global variables
 int line_count = 0;
+int total_time = 0;
 
 // function prototypes
-void dataCollection(CmdRecord*, ifstream&);
+void dataCollection(CmdRecord*, ifstream&, int&);
 int lookAndAdd(string, int, int);
 
 int main(int argc, char** argv) {
@@ -66,8 +67,11 @@ int main(int argc, char** argv) {
 	int counter = 0;
 	int field_counter = 0;
 	string temp_data = "";
+	string past_time = "";
+
+	// we also have to set up a new command list, and a temporary record collector
+	CmdList commands;
 	CmdRecord temp_record;
-	Node* curr_node = new Node; // TODO: head of the linked list. work on this later.
 
 	// do a getline() to remove the header and fire up the record collection loop
 	log_file.getline();
@@ -76,11 +80,11 @@ int main(int argc, char** argv) {
 
 		if (field_counter == RELTIME) {
 			// we have the Rel Time field value
-			temp_record.reltime = curr_field;
+			temp_record.Set_RelTime(curr_field);
 
 		} else if (field_counter == ADDRESS) {
 			// we have the Address field value
-			temp_record.address = curr_field;
+			temp_record.Set_Address(curr_field);
 
 		} else if (field_counter == DATA) {
 			// we have the Data field value (this is special if it's in the address of
@@ -89,11 +93,11 @@ int main(int argc, char** argv) {
 
 		} else if(field_counter == SIZE) {
 			// we have the Size field value
-			temp_record.size = curr_field;
+			temp_record.Set_Size(curr_field);
 
 		} else if(field_counter == CYCLE) {
 			// we have the Cycle field value
-			temp_record.cycle = curr_field;
+			temp_record.Set_Cycle(curr_field);
 
 		}
 
@@ -103,31 +107,27 @@ int main(int argc, char** argv) {
 		// line_count. if it's a record we want, we do the above and calculate the size
 		// of the data, and then enter the data collection loop.
 		if (field_counter == ENDLINE) {
-			if (temp_record.address == CMD1 || temp_record.address == CMD2) {
-				// calculate the size of the data, and loop through to collect
-				// the subsequent lines and put them into the data array
-				temp_record.line = line_count;
+			if (temp_record.Get_Address() == CMD1 || 
+				temp_record.Get_Address() == CMD2) {
+				// set the line number and past time (which is the time for the 
+				// current command)
+				temp_record.Set_Line_Number(line_count);
+				temp_record.Set_RelTime(past_time);
 
-				// make a new record, populate it with the information, and
-				// add it to the linked list
-				Node* new_node = new Node();
-				curr_node.next_ptr = new_node;
-				// make new_node the position that our pointer is pointing to
-				new_node = curr_node;
+				// make a new record and populate it with the information
+				CmdRecord* curr_record = new CmdRecord();
+				curr_record = temp_record;
 
 				// pass the current node and the ifstream to the dataCollection 
 				// function to keep this from getting cluttered
-				dataCollection(curr_node, log_file);
+				dataCollection(curr_record, log_file, line_count);
 
-				// TODO:
-				// copy constructor?
-				// new_node->record = curr_record;
-				// ...or regular instaniation? (maybe with a constructor that can
-				// set all the values 
-				// new_node->record = new CmdRecord();
+				// add it to the command list
+				commands.AddRecord(curr_record);
 			}
 			
 			// this happens every time we reach the end of a line
+			past_time = temp_record.reltime;
 			field_counter = 0;
 			line_count++;
 		}  
@@ -138,20 +138,26 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-void dataCollection(CmdRecord* curr_node, ifstream& log_file, int field_counter) {
-	// TODO: compute the size of the data
+void dataCollection(CmdRecord* curr_record, ifstream& log_file, int& line_count) {
+	// find the length in words of the command data
+	int length = (hexToDec(curr_record.Get_Data()) / 2)
+	int field_counter = 0;
 
-	while(/* not at end of data */) {
+	for (int i = 0; i < length; i++)  {
 		log_file >> curr_field
 		field_counter++;
 
 		if (field_counter == DATA) {
-			// TODO: fill this out more
-
 			// we have the Data field value (this is special if it's in the address of
 			// a command we want, so set it aside for later)
-			curr_node->CmdRecord.data[i] = curr_field;
+			curr_node->CmdRecord.Set_Data(i, curr_field);
+		} else if (field_counter == ENDLINE) {
+			field_counter = 0;
+			line_count++;
 		}
+
+	curr_record.Set_Total_Words(length);
+	return;
 }
 
 //given a bitstring, return the decimal value of the given range

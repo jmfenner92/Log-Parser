@@ -46,14 +46,12 @@ std::string CmdRecord::Get_Address() const
 	return address;
 }
 
-// Include "data" functions when way to handle data is settled...
-
-std::string CmdRecord::Set_Data() const
+std::string CmdRecord::Set_Data(int index, string new_data) const
 {
-	data = new_data;
+	data[index] = new_data;
 }
 
-std::string CmdRecord::Get_Data() const
+std::string* CmdRecord::Get_Data() const
 {
 	return data;
 }
