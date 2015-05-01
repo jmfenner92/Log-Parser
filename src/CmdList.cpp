@@ -24,25 +24,35 @@ CmdList::~CmdList()
 }
 		
 // Simple Add function that adds new record at end of the list
-void CmdList::AddRecord(CmdRecord *record)
+void CmdList::AddRecord(CmdRecord record)
 {
-	CmdNode *temp = head;
+	// declare and initialize necessary variables
+	CmdNode *current = head;
+	CmdNode *temp_node;
+	bool success = false;
 
-	// Check if list is empty
-	if(temp == NULL)
+	// initialize new Cmd_Node
+	temp_node = new CmdNode;
+	temp_node->info = record;
+	temp_node->next = NULL;
+
+	// check if list is empty
+	if(head == NULL)
 	{
-		temp->info = *record;
+		head = temp_node;
+		success = true;
 	}
-	else // list exists
+	else // otherwise, loop till end and add new node
 	{
-		// loop thru list till end
-		while(temp->next != NULL)
+		while(current->next != NULL)
 		{
-			temp = temp->next;
+			current = current->next;
 		}
-		// add new record to end of list
-		temp->info = *record;
+		current->next = temp_node;
+		success = true;
 	}
+	
+	return success;	
 } // end of AddRecord()
 
 // simple find function
@@ -84,9 +94,8 @@ bool CmdList::RemoveRecord(std::string line)
 		}
 		else
 		{
-			while(current != NULL)
+			while(current != NULL && !success)
 			{	
-				previous = current;
 				if(current->info.Get_Line_Number() == line)
 				{
 					previous->next = current->next;
@@ -95,6 +104,7 @@ bool CmdList::RemoveRecord(std::string line)
 				}
 				else
 				{
+					previous = current;
 					current = current->next;
 				}
 			}
