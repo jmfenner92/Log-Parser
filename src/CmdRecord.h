@@ -7,7 +7,7 @@
 * This is the header file for the CmdRecord class
 =================================================================================================*/
 
-#ifndef
+#ifndef CMDRECORD_H
 #define CMDRECORD_H
 #include <stdlib.h>
 #include <string>
@@ -22,7 +22,7 @@ public:
 	std::string	Get_Line_Number() const;
 	void	Set_Address(std::string);
 	std::string	Get_Address() const;
-	void Set_Data(int, string);
+	void Set_Data(int, std::string);
 	string* Get_Data() const;    
     //void	Set_Total_Words(std::string);
 	//std::string	Get_Total_Words() const;
