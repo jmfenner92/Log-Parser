@@ -115,6 +115,11 @@ std::string HexToBit (std::string hex_string)
 	return bit_string;
 }
 
+std::int HexToDec (std::string hex_string)
+{
+	return (int)strtol(hexstr.c_str(),0,16);
+}
+
 // This is the lookup table in a function as suggested, returns a 
 // string to be printed to stdout
 std::string LookUpTable(int word, int bit_value)

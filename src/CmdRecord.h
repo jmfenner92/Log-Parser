@@ -9,7 +9,7 @@
 
 #ifndef
 #define CMDRECORD_H
-
+#include <stdlib.h>
 #include <string>
 
 // This class is used to store the various pieces of information from the log file.
@@ -32,7 +32,8 @@ public:
 	std::string	Get_Cycle() const;
 	void	Set_RelTime(std::string);
 	std::string  Get_RelTime() const;
-    	std::string HexToBit (string hex_string);
+    std::string HexToBit (string hex_string);
+    std::int HexToDec (string hex_string);
 	std::string LookUpTable(int word, int bit_value);
 
 	CmdRecord operator=(const CmdRecord &other);
