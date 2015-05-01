@@ -7,6 +7,9 @@
 * This is the header file for the CmdRecord class
 =================================================================================================*/
 
+#ifndef
+#define CMDRECORD_H
+
 #include <string>
 
 // This class is used to store the various pieces of information from the log file.
@@ -43,3 +46,5 @@ private: // All data members are assumed to be strings
 	std::string reltime;
     //std::string total_words;
 }; // end of CmdRecord class
+
+#endif

@@ -7,6 +7,9 @@
 * This is the header file for the CmdList class
 ===================================================================================================*/
 
+#ifndef
+#define CMDLIST_H
+
 #include "CmdRecord.h"
 
 struct	CmdNode
@@ -27,3 +30,5 @@ public:
 private:
 	CmdNode *head;
 };
+
+#endif

@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include <string>
 #include <cmath>
-// TODO: add the team's headers later
+#include "CmdList.h"
 
 using namespace std;
 
@@ -24,9 +24,8 @@ using namespace std;
 #define CYCLE 10
 #define ENDLINE 14
 
-// TODO: make this strings? ...or use hex?
-#define CMD1 0x40000810
-#define CMD2 0x40000C18
+#define CMD1 "0x40000810"
+#define CMD2 "0x40000C18"
 
 // global variables
 int line_count = 0;
@@ -114,13 +113,9 @@ int main(int argc, char** argv) {
 				temp_record.Set_Line_Number(line_count);
 				temp_record.Set_RelTime(past_time);
 
-				// make a new record and populate it with the information
-				CmdRecord* curr_record = new CmdRecord();
-				curr_record = temp_record;
-
 				// pass the current node and the ifstream to the dataCollection 
 				// function to keep this from getting cluttered
-				dataCollection(curr_record, log_file, line_count);
+				dataCollection(curr_record, log_file);
 
 				// add it to the command list
 				commands.AddRecord(curr_record);
@@ -138,25 +133,26 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-void dataCollection(CmdRecord* curr_record, ifstream& log_file, int& line_count) {
+void dataCollection(CmdRecord* curr_record, ifstream& log_file) {
 	// find the length in words of the command data
-	int length = (hexToDec(curr_record.Get_Data()) / 2)
+	int length = (hexToDec(curr_record.Get_Size()) / 4)
 	int field_counter = 0;
 
-	for (int i = 0; i < length; i++)  {
+	for (int i = 0; i < length; i+=2)  {
 		log_file >> curr_field
 		field_counter++;
 
 		if (field_counter == DATA) {
 			// we have the Data field value (this is special if it's in the address of
 			// a command we want, so set it aside for later)
-			curr_node->CmdRecord.Set_Data(i, curr_field);
+			curr_node->curr_record.Set_Data(i, curr_field.substr(0,4);
+			curr_node->curr_record.Set_Data(i+1, curr_field.substr(4,4));
 		} else if (field_counter == ENDLINE) {
 			field_counter = 0;
 			line_count++;
 		}
 
-	curr_record.Set_Total_Words(length);
+	// curr_record.Set_Total_Words(length);
 	return;
 }
 
