@@ -23,7 +23,7 @@ public:
 	void	Set_Address(std::string);
 	std::string	Get_Address() const;
 	void Set_Data(int, std::string);
-	string* Get_Data() const;    
+	std::string* Get_Data() const;    
     //void	Set_Total_Words(std::string);
 	//std::string	Get_Total_Words() const;
 	void	Set_Size(std::string);
@@ -32,8 +32,8 @@ public:
 	std::string	Get_Cycle() const;
 	void	Set_RelTime(std::string);
 	std::string  Get_RelTime() const;
-    std::string HexToBit (string hex_string);
-    std::int HexToDec (string hex_string);
+    std::string HexToBit(string);
+    int HexToDec(std::string);
 	std::string LookUpTable(int word, int bit_value);
 
 	CmdRecord operator=(const CmdRecord &other);

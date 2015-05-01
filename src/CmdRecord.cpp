@@ -14,7 +14,7 @@ CmdRecord::CmdRecord()
 {
 	line_number = "";
 	address = "";
-	data = "";
+	data [100];
 	size = "";
 	cycle = "";
 	reltime = "";
@@ -46,7 +46,7 @@ std::string CmdRecord::Get_Address() const
 	return address;
 }
 
-void CmdRecord::Set_Data(int index,std::string new_data) const
+void CmdRecord::Set_Data(int index,std::string new_data)
 {
 	data[index] = new_data;
 }
@@ -87,7 +87,7 @@ std::string CmdRecord::Get_RelTime() const
 	return reltime;
 }
 
-std::string CmdRecord::HexToBit (string hex_string)
+std::string CmdRecord::HexToBit(string hex_string)
 {
 	string bit_string = "";
 	for (int i=0; i < hex_string.length(); ++i)
@@ -115,9 +115,9 @@ std::string CmdRecord::HexToBit (string hex_string)
 	return bit_string;
 }
 
-std::int CmdRecord::HexToDec (std::string hex_string)
+int CmdRecord::HexToDec (std::string hex_string)
 {
-	return (int)strtol(hexstr.c_str(),0,16);
+	return (int)strtol(hex_string.c_str(),0,16);
 }
 
 // This is the lookup table in a function as suggested, returns a 
