@@ -117,6 +117,120 @@ std::string HexToBit (std::string hex_string)
 	return bit_string;
 }
 
+// This is the lookup table in a function as suggested, returns a 
+// string to be printed to stdout
+std::string LookUpTable(int word, int bit_value)
+{
+	// declare necessary variables
+	std::string printString = "";
+
+	// switch over word number, then, possibly bit_value
+	// while assembling printString
+	switch(word)
+	{
+	case 0:
+	{
+		printString += "Word 0: Rec_Ctrl = ";
+		switch(bit_value)
+		{
+		case 0: printString += "0 (no recording)"; break;
+		case 2: printString += "2 (no processing)"; break;
+		case 3: printString += "3 (processing & recording)"; break;
+		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		}
+		break;
+	}	
+	case 1:
+	{
+		printString += "Word 1: Cmd_Type = ";
+		switch(bit_value)
+		{
+		case 4: printString += "4 (Type A)"; break;
+		case 5:	printString += "5 (Type B)"; break;
+		case 6: printString += "6 (Type C)"; break;
+		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		}
+		break;
+	}
+	case 4:
+	{
+		printString += "Word 4: Rec_Raw = ";
+		switch(bit_value)
+		{
+		case 0: printString += "0 (disable)"; break;
+		case 1: printString += "1 (enable)"; break;
+		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		}
+		break;
+	}
+	case 5: printString += "Word 5: Cmd_ID = " + std::to_string(bit_value); break;
+	case 10: printString += "Word 10: Num_Responses = " + std::to_string(bit_value); break;
+	case 15:
+	{
+		printString += "Word 15: Reset_Enable = ";
+		switch(bit_value)
+		{
+		case 0: printString += "0 (disable)"; break;
+		case 1: printString += "1 (enable)"; break;
+		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		}
+		break;
+	}
+	case 22:
+	{
+		printString += "Word 22: Direction = ";
+		switch(bit_value)
+		{
+		case 0: printString += "0 (Right)"; break;
+		case 1: printString += "1 (Left)"; break;
+		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		}
+		break;
+	}	
+	case 32: printString += "Word 32: Num_Samples = " + std::to_string(bit_value); break;
+	case 37:
+	{
+		printString += "Word 37: Parity = ";
+		switch(bit_value)
+		{
+		case 0: printString += "0 (even)"; break;
+		case 1: printString += "1 (odd)"; break;
+		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		}
+		break;
+	}
+	case 38:
+	{
+		printString += "Word 38: Test = ";
+		switch(bit_value)
+		{
+		case 0: printString += "0 (disable)"; break;
+		case 1: printString += "1 (enable)"; break;
+		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		}
+		break;
+	}
+	case 40:
+	{
+		printString += "Word 40: Ctrl_Enable = ";
+		switch(bit_value)
+		{
+		case 0: printString += "0 (disable)"; break;
+		case 1: printString += "1 (enable)"; break;
+		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		}
+		break;
+	}
+	case 41: printString += "Word 41: Code = " + std::to_string(bit_value); break;
+	default: printString += "Error has occurred in lookup"; break;
+	
+	// attach endline to string?
+	printString += "\n";
+	
+	return printString;
+
+} // end of printString()
+
 CmdRecord CmdRecord::operator=(const CmdRecord &other)
 {
 	line_number = other.Get_Line_Number();
