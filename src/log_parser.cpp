@@ -34,6 +34,7 @@ int total_time = 0;
 // function prototypes
 void dataCollection(CmdRecord*, ifstream&, int&);
 int lookAndAdd(string, int, int);
+float timeConverter(string);
 
 int main(int argc, char** argv) {
 
@@ -159,7 +160,7 @@ void dataCollection(CmdRecord* curr_record, ifstream& log_file) {
 //given a bitstring, return the decimal value of the given range
 int lookAndAdd(string bitString, int startRange, int endRange) {
 	int result = 0;
-	str = bitString.substr(startRange, endRange-startRange);
+	string str = bitString.substr(startRange, endRange-startRange);
 	int powerCounter = len(str) - 1;
 	int indexCounter = 0;
 	while(powerCounter != -1){
@@ -176,3 +177,17 @@ int lookAndAdd(string bitString, int startRange, int endRange) {
 	return result;
 }
 
+//convert us and ns to s
+float timeConverter(string timeString) {
+	string str = timeString.substr(0, len(timeString) - 2);
+	float result = atof(str.c_str());
+	string time = timeString.substr(len(timeString) - 2, 2);
+	if(time == "us")
+		return pow(result, -6);
+	else if (time == "ns")
+		return pow(result, -9);
+}
+	
+	
+	
+	
