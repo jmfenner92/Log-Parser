@@ -145,7 +145,7 @@ int main(int argc, char** argv) {
 
 	}
 
-
+	//commands.PrintList();
 	return 0;
 }
 

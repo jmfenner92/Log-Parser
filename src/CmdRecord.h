@@ -36,7 +36,6 @@ public:
     std::string HexToBit(std::string);
     int HexToDec(std::string);
 	std::string LookUpTable(int word, int bit_value);
-
 	CmdRecord& operator=(const CmdRecord &other);
 
 private: // All data members are assumed to be strings

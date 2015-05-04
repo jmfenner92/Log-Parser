@@ -113,7 +113,19 @@ bool CmdList::RemoveRecord(std::string line)
 
 	return success;
 } // end of RemoveRecord()
-	
+
+// used for testing...
+void CmdList::PrintList() const
+{
+	CmdNode *current = head;
+
+	while(current != NULL)
+	{
+		std::cout << current->info.Get_Line_Number() << ": " << current->info.Get_Address() << "\n";
+		current = current->next;
+	}
+} // end of PrintList()
+
 // simple Display function, still needs to be worked on...
 void CmdList::Display() const
 {

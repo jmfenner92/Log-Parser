@@ -24,7 +24,7 @@ CmdList::~CmdList()
 }
 		
 // Simple Add function that adds new record at end of the list
-void CmdList::AddRecord(CmdRecord record)
+bool CmdList::AddRecord(CmdRecord record)
 {
 	// declare and initialize necessary variables
 	CmdNode *current = head;
@@ -114,6 +114,17 @@ bool CmdList::RemoveRecord(std::string line)
 	return success;
 } // end of RemoveRecord()
 	
+void CmdList::PrintList() const
+{
+	CmdNode *current = head;
+
+	while(current != NULL)
+	{
+		std::cout << current->info.Get_Line_Number() << ": " << current->info.Get_Address() << "\n";
+		current = current->next;
+	}
+} // end of PrintList()
+
 // simple Display function, still needs to be worked on...
 void CmdList::Display() const
 {
@@ -146,7 +157,7 @@ void CmdList::Display() const
 		}
 
         //Display number of words
-        std::cout << info.Get_Total_Words << " words" << endl;
+        //std::cout << info.Get_Total_Words << " words" << endl;
 
 		//Display data...
         
@@ -160,7 +171,7 @@ void CmdList::Display() const
         }
         
         //create blank line for next command
-        std::cout << endl;
+        //std::cout << endl;
 	}
 } // end of Display()
 

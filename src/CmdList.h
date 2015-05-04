@@ -27,6 +27,7 @@ public:
 	bool	RemoveRecord(std::string line);
 	bool	FindRecord(std::string line) const;
 	void	Display() const;
+	void	PrintList() const;
 private:
 	CmdNode *head;
 };
