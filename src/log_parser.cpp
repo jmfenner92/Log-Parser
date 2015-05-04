@@ -36,6 +36,7 @@ namespace patch
 #define SIZE 9
 #define CYCLE 10
 #define ENDLINE 14
+#define NUM_FIELDS 14
 
 #define CMD1 "40000810"
 #define CMD2 "40000C18"
@@ -144,8 +145,9 @@ int main(int argc, char** argv) {
 		}  
 
 	}
-
-	//commands.PrintList();
+	
+	log_file.close();
+	commands.PrintList();
 	return 0;
 }
 
@@ -153,9 +155,10 @@ void dataCollection(CmdRecord* curr_record, ifstream& log_file, std::string temp
 	// find the length in words of the command data
 	int length = (curr_record->HexToDec(temp_data) / 4);
 	int field_counter = 0;
+	int indexer = 0;
 	std::string curr_field;
 
-	for (int i = 0; i < length; i+=2)  {
+	for (int i = 0; i < (length*NUM_FIELDS); i++)  {
 		log_file >> curr_field;
 		field_counter++;
 
@@ -164,8 +167,10 @@ void dataCollection(CmdRecord* curr_record, ifstream& log_file, std::string temp
 			// a command we want, so set it aside for later)
 			//curr_node->curr_record.Set_Data(i, curr_field.substr(0,4);
 			//curr_node->curr_record.Set_Data(i+1, curr_field.substr(4,4));
-			curr_record->Set_Data(i, curr_field.substr(0,4));
-			curr_record->Set_Data(i+1, curr_field.substr(4,4));
+			curr_record->Set_Data(indexer, curr_field.substr(0,4));
+			curr_record->Set_Data(indexer+1, curr_field.substr(4,4));
+			indexer += 2;
+
 		} else if (field_counter == ENDLINE) {
 			field_counter = 0;
 			line_count++;

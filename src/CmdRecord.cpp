@@ -63,7 +63,7 @@ std::string CmdRecord::Get_Address() const
 
 void CmdRecord::Set_Data(int index,std::string new_data)
 {
-	data[index] = new_data;
+	data.push_back(new_data);
 }
 
 std::vector<std::string> CmdRecord::Get_Data() const
