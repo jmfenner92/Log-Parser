@@ -12,9 +12,22 @@
 #include <cstdlib>
 #include <string>
 #include <cmath>
+#include <sstream>
 #include "CmdList.h"
 
 using namespace std;
+
+// Taken from http://stackoverflow.com/questions/12975341/to-string-is-not-a-member-of-std-says-so-g
+//in order to fix a bug in to_string. Apparently there needs to be an offical patch? Strange....
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
 
 // define macros for readability of the desired columns and commands
 #define RELTIME 3
@@ -32,7 +45,7 @@ int line_count = 0;
 int total_time = 0;
 
 // function prototypes
-void dataCollection(CmdRecord*, ifstream&, int&);
+void dataCollection(CmdRecord*, ifstream&);
 int lookAndAdd(string, int, int);
 float timeConverter(string);
 
@@ -47,7 +60,8 @@ int main(int argc, char** argv) {
 	}
 
 	// open the file for reading and check for success
-	ifstream log_file = open(argv[1]);
+	ifstream log_file;
+	log_file.open(argv[1]);
 	if (!log_file) {
 		cerr << "File failed to open. Are you sure it exists?" << endl;
 		exit(-1);
@@ -74,7 +88,8 @@ int main(int argc, char** argv) {
 	CmdRecord temp_record;
 
 	// do a getline() to remove the header and fire up the record collection loop
-	log_file.getline();
+	std::string temp;
+	getline(log_file, temp);
 	while(log_file >> curr_field) {
 		field_counter++;
 
@@ -111,19 +126,19 @@ int main(int argc, char** argv) {
 				temp_record.Get_Address() == CMD2) {
 				// set the line number and past time (which is the time for the 
 				// current command)
-				temp_record.Set_Line_Number(line_count);
+				temp_record.Set_Line_Number(patch::to_string(line_count));
 				temp_record.Set_RelTime(past_time);
 
 				// pass the current node and the ifstream to the dataCollection 
 				// function to keep this from getting cluttered
-				dataCollection(curr_record, log_file);
+				dataCollection(&temp_record, log_file);
 
 				// add it to the command list
-				commands.AddRecord(curr_record);
+				commands.AddRecord(temp_record);
 			}
 			
 			// this happens every time we reach the end of a line
-			past_time = temp_record.reltime;
+			past_time = temp_record.Get_RelTime();
 			field_counter = 0;
 			line_count++;
 		}  
@@ -136,22 +151,26 @@ int main(int argc, char** argv) {
 
 void dataCollection(CmdRecord* curr_record, ifstream& log_file) {
 	// find the length in words of the command data
-	int length = (hexToDec(curr_record.Get_Size()) / 4)
+	int length = (curr_record->HexToDec(curr_record->Get_Size()) / 4);
 	int field_counter = 0;
+	std::string curr_field;
 
 	for (int i = 0; i < length; i+=2)  {
-		log_file >> curr_field
+		log_file >> curr_field;
 		field_counter++;
 
 		if (field_counter == DATA) {
 			// we have the Data field value (this is special if it's in the address of
 			// a command we want, so set it aside for later)
-			curr_node->curr_record.Set_Data(i, curr_field.substr(0,4);
-			curr_node->curr_record.Set_Data(i+1, curr_field.substr(4,4));
+			//curr_node->curr_record.Set_Data(i, curr_field.substr(0,4);
+			//curr_node->curr_record.Set_Data(i+1, curr_field.substr(4,4));
+			curr_record->Set_Data(i, curr_field.substr(0,4));
+			curr_record->Set_Data(i+1, curr_field.substr(4,4));
 		} else if (field_counter == ENDLINE) {
 			field_counter = 0;
 			line_count++;
 		}
+	}
 
 	// curr_record.Set_Total_Words(length);
 	return;
@@ -161,7 +180,7 @@ void dataCollection(CmdRecord* curr_record, ifstream& log_file) {
 int lookAndAdd(string bitString, int startRange, int endRange) {
 	int result = 0;
 	string str = bitString.substr(startRange, endRange-startRange);
-	int powerCounter = len(str) - 1;
+	int powerCounter = str.length() - 1;
 	int indexCounter = 0;
 	while(powerCounter != -1){
 			if(str[indexCounter] == '0') {
@@ -169,7 +188,7 @@ int lookAndAdd(string bitString, int startRange, int endRange) {
 				powerCounter--;			
 			}
 			else {
-				result += exp2(powerCounter)
+				result += exp2(powerCounter);
 				indexCounter++;
 				powerCounter--;
 			}
@@ -179,9 +198,9 @@ int lookAndAdd(string bitString, int startRange, int endRange) {
 
 //convert us and ns to s
 float timeConverter(string timeString) {
-	string str = timeString.substr(0, len(timeString) - 2);
+	string str = timeString.substr(0, timeString.length() - 2);
 	float result = atof(str.c_str());
-	string time = timeString.substr(len(timeString) - 2, 2);
+	string time = timeString.substr(timeString.length() - 2, 2);
 	if(time == "us")
 		return pow(result, -6);
 	else if (time == "ns")
