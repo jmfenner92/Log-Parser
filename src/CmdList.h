@@ -7,7 +7,7 @@
 * This is the header file for the CmdList class
 ===================================================================================================*/
 
-#ifndef
+#ifndef CMDLIST_H
 #define CMDLIST_H
 
 #include "CmdRecord.h"
@@ -23,7 +23,7 @@ class	CmdList
 public:
 	CmdList();
 	~CmdList();
-	void	AddRecord(CmdRecord *record);
+	bool	AddRecord(CmdRecord record);
 	bool	RemoveRecord(std::string line);
 	bool	FindRecord(std::string line) const;
 	void	Display() const;

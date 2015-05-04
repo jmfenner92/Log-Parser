@@ -11,6 +11,7 @@
 #define CMDRECORD_H
 #include <stdlib.h>
 #include <string>
+#include <vector>
 
 // This class is used to store the various pieces of information from the log file.
 class CmdRecord
@@ -23,7 +24,7 @@ public:
 	void	Set_Address(std::string);
 	std::string	Get_Address() const;
 	void Set_Data(int, std::string);
-	std::string* Get_Data() const;    
+	std::vector<std::string> Get_Data() const;    
     //void	Set_Total_Words(std::string);
 	//std::string	Get_Total_Words() const;
 	void	Set_Size(std::string);
@@ -32,16 +33,16 @@ public:
 	std::string	Get_Cycle() const;
 	void	Set_RelTime(std::string);
 	std::string  Get_RelTime() const;
-    std::string HexToBit(string);
+    std::string HexToBit(std::string);
     int HexToDec(std::string);
 	std::string LookUpTable(int word, int bit_value);
 
-	CmdRecord operator=(const CmdRecord &other);
+	CmdRecord& operator=(const CmdRecord &other);
 
 private: // All data members are assumed to be strings
 	std::string line_number;
 	std::string address;
-	std::string data[100]; // Make this variable public?
+	std::vector<std::string> data; // turned into a vector
 	std::string size;
 	std::string cycle;
 	std::string reltime;

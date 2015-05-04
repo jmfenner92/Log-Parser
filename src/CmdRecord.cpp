@@ -7,14 +7,29 @@
 * This is the .cpp file for the CmdRecord class
 =================================================================================================*/
 
+#include <string>
 #include "CmdRecord.h"
+#include <sstream>
+
+// Taken from http://stackoverflow.com/questions/12975341/to-string-is-not-a-member-of-std-says-so-g
+//in order to fix a bug in to_string. Apparently there needs to be an offical patch? Strange....
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
 
 // constructor
 CmdRecord::CmdRecord()
 {
 	line_number = "";
 	address = "";
-	data [100];
+	//data [100];
+	std::vector<std::string>(100);
 	size = "";
 	cycle = "";
 	reltime = "";
@@ -51,7 +66,7 @@ void CmdRecord::Set_Data(int index,std::string new_data)
 	data[index] = new_data;
 }
 
-std::string* CmdRecord::Get_Data() const
+std::vector<std::string> CmdRecord::Get_Data() const
 {
 	return data;
 }
@@ -87,9 +102,9 @@ std::string CmdRecord::Get_RelTime() const
 	return reltime;
 }
 
-std::string CmdRecord::HexToBit(string hex_string)
+std::string CmdRecord::HexToBit(std::string hex_string)
 {
-	string bit_string = "";
+	std::string bit_string = "";
 	for (int i=0; i < hex_string.length(); ++i)
 	{
 		switch (hex_string [i])
@@ -139,7 +154,7 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		case 0: printString += "0 (no recording)"; break;
 		case 2: printString += "2 (no processing)"; break;
 		case 3: printString += "3 (processing & recording)"; break;
-		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		default: printString += patch::to_string(bit_value) + " (unknown)"; break;
 		}
 		break;
 	}	
@@ -151,7 +166,7 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		case 4: printString += "4 (Type A)"; break;
 		case 5:	printString += "5 (Type B)"; break;
 		case 6: printString += "6 (Type C)"; break;
-		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		default: printString += patch::to_string(bit_value) + " (unknown)"; break;
 		}
 		break;
 	}
@@ -162,12 +177,12 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		{
 		case 0: printString += "0 (disable)"; break;
 		case 1: printString += "1 (enable)"; break;
-		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		default: printString += patch::to_string(bit_value) + " (unknown)"; break;
 		}
 		break;
 	}
-	case 5: printString += "Word 5: Cmd_ID = " + std::to_string(bit_value); break;
-	case 10: printString += "Word 10: Num_Responses = " + std::to_string(bit_value); break;
+	case 5: printString += "Word 5: Cmd_ID = " + patch::to_string(bit_value); break;
+	case 10: printString += "Word 10: Num_Responses = " + patch::to_string(bit_value); break;
 	case 15:
 	{
 		printString += "Word 15: Reset_Enable = ";
@@ -175,7 +190,7 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		{
 		case 0: printString += "0 (disable)"; break;
 		case 1: printString += "1 (enable)"; break;
-		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		default: printString += patch::to_string(bit_value) + " (unknown)"; break;
 		}
 		break;
 	}
@@ -186,11 +201,11 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		{
 		case 0: printString += "0 (Right)"; break;
 		case 1: printString += "1 (Left)"; break;
-		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		default: printString += patch::to_string(bit_value) + " (unknown)"; break;
 		}
 		break;
 	}	
-	case 32: printString += "Word 32: Num_Samples = " + std::to_string(bit_value); break;
+	case 32: printString += "Word 32: Num_Samples = " + patch::to_string(bit_value); break;
 	case 37:
 	{
 		printString += "Word 37: Parity = ";
@@ -198,7 +213,7 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		{
 		case 0: printString += "0 (even)"; break;
 		case 1: printString += "1 (odd)"; break;
-		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		default: printString += patch::to_string(bit_value) + " (unknown)"; break;
 		}
 		break;
 	}
@@ -209,7 +224,7 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		{
 		case 0: printString += "0 (disable)"; break;
 		case 1: printString += "1 (enable)"; break;
-		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		default: printString += patch::to_string(bit_value) + " (unknown)"; break;
 		}
 		break;
 	}
@@ -220,13 +235,13 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		{
 		case 0: printString += "0 (disable)"; break;
 		case 1: printString += "1 (enable)"; break;
-		default: printString += std::to_string(bit_value) + " (unknown)"; break;
+		default: printString += patch::to_string(bit_value) + " (unknown)"; break;
 		}
 		break;
 	}
-	case 41: printString += "Word 41: Code = " + std::to_string(bit_value); break;
+	case 41: printString += "Word 41: Code = " + patch::to_string(bit_value); break;
 	default: printString += "Error has occurred in lookup"; break;
-	
+	}
 	// attach endline to string?
 	printString += "\n";
 	
@@ -234,14 +249,14 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 
 } // end of printString()
 
-CmdRecord CmdRecord::operator=(const CmdRecord &other)
+CmdRecord& CmdRecord::operator=(const CmdRecord &other)
 {
 	line_number = other.Get_Line_Number();
 	address = other.Get_Address();
-	// add something for data
 	data = other.Get_Data();
 	size = other.Get_Size();
 	cycle = other.Get_Cycle();
 	reltime = other.Get_RelTime();
+	return *this;
 }
 
