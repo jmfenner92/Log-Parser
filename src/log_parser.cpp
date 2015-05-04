@@ -37,15 +37,15 @@ namespace patch
 #define CYCLE 10
 #define ENDLINE 14
 
-#define CMD1 "0x40000810"
-#define CMD2 "0x40000C18"
+#define CMD1 "40000810"
+#define CMD2 "40000C18"
 
 // global variables
-int line_count = 0;
+int line_count = 2;
 int total_time = 0;
 
 // function prototypes
-void dataCollection(CmdRecord*, ifstream&);
+void dataCollection(CmdRecord*, ifstream&, string);
 int lookAndAdd(string, int, int);
 float timeConverter(string);
 
@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
 
 				// pass the current node and the ifstream to the dataCollection 
 				// function to keep this from getting cluttered
-				dataCollection(&temp_record, log_file);
+				dataCollection(&temp_record, log_file, temp_data);
 
 				// add it to the command list
 				commands.AddRecord(temp_record);
@@ -149,9 +149,9 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-void dataCollection(CmdRecord* curr_record, ifstream& log_file) {
+void dataCollection(CmdRecord* curr_record, ifstream& log_file, std::string temp_data) {
 	// find the length in words of the command data
-	int length = (curr_record->HexToDec(curr_record->Get_Size()) / 4);
+	int length = (curr_record->HexToDec(temp_data) / 4);
 	int field_counter = 0;
 	std::string curr_field;
 
