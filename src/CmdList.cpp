@@ -135,7 +135,7 @@ void CmdList::Display() const
 	while(temp != NULL)
 	{
 		// display line number
-		std::cout << temp->info.Get_Line_Number() << ": " << temp->info.Get_Address() << "\n";
+		std::cout << "Line " << temp->info.Get_Line_Number() << ": ";
 
 		// display Read or Write
 		if(temp->info.Get_Cycle() == "Wr")
@@ -150,11 +150,11 @@ void CmdList::Display() const
 		// display command type
 		if(temp->info.Get_Address() == "40000810")
 		{
-            std::cout << "S-to-D command: " << temp->info.Get_Total_Words() << " words" << "\n";
+            		std::cout << "S-to-D command: " << temp->info.Get_Total_Words() << " words" << "\n";
 		}
 		else
 		{
-            std::cout << "D-to-S command: " << temp->info.Get_Total_Words() << " words" << "\n";
+            		std::cout << "D-to-S command: " << temp->info.Get_Total_Words() << " words" << "\n";
 		}
         
         //while ()  //is this right im not sure, what arg shall this while loop take
@@ -177,6 +177,8 @@ void CmdList::Display() const
         
         //create blank line for next command
         //std::cout << endl;
+	temp = temp->next;
+	std::cout << "\n";
 	}
 } // end of Display()
 

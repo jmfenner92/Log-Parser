@@ -33,6 +33,7 @@ CmdRecord::CmdRecord()
 	size = "";
 	cycle = "";
 	reltime = "";
+	wordsLength = 0;
 }
 
 // destructor getting error...
@@ -104,12 +105,14 @@ std::string CmdRecord::Get_RelTime() const
 
 void CmdRecord::Set_Total_Words(int length)
 {
-	int wordsLength = length;
+	wordsLength = length;
 }
+
 int CmdRecord::Get_Total_Words() const
 {
 	return wordsLength;
 }
+
 std::string CmdRecord::HexToBit(std::string hex_string)
 {
 	std::string bit_string = "";
@@ -265,6 +268,7 @@ CmdRecord& CmdRecord::operator=(const CmdRecord &other)
 	size = other.Get_Size();
 	cycle = other.Get_Cycle();
 	reltime = other.Get_RelTime();
+	wordsLength = other.Get_Total_Words();
 	return *this;
 }
 

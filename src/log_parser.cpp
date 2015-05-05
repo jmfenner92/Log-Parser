@@ -134,6 +134,11 @@ int main(int argc, char** argv) {
 				// function to keep this from getting cluttered
 				dataCollection(&temp_record, log_file, temp_data);
 
+				//add # of words to record
+				//std::cout << temp_record.HexToDec(temp_data) / 2 << "\n";
+				temp_record.Set_Total_Words(temp_record.HexToDec(temp_data) / 2);
+				//std::cout << temp_record.Get_Total_Words() << "\n";
+
 				// add it to the command list
 				commands.AddRecord(temp_record);
 			}
@@ -147,7 +152,8 @@ int main(int argc, char** argv) {
 	}
 	
 	log_file.close();
-	commands.PrintList();
+	//commands.PrintList();
+	commands.Display();
 	return 0;
 }
 

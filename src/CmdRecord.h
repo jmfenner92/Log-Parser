@@ -33,8 +33,8 @@ public:
 	std::string	Get_Cycle() const;
 	void	Set_RelTime(std::string);
 	std::string  Get_RelTime() const;
-    std::string HexToBit(std::string);
-    int HexToDec(std::string);
+    	std::string HexToBit(std::string);
+    	int HexToDec(std::string);
 	std::string LookUpTable(int word, int bit_value);
 	CmdRecord& operator=(const CmdRecord &other);
 
