@@ -135,7 +135,7 @@ void CmdList::Display() const
 	while(temp != NULL)
 	{
 		// display line number
-		std::cout << temp->info.Get_Line_Number() << ": " << current->info.Get_Address() << "\n"
+		std::cout << temp->info.Get_Line_Number() << ": " << temp->info.Get_Address() << "\n";
 
 		// display Read or Write
 		if(temp->info.Get_Cycle() == "Wr")
@@ -148,19 +148,19 @@ void CmdList::Display() const
 		}
 		
 		// display command type
-		if(temp->info.Get_Address() == "0x40000810")
+		if(temp->info.Get_Address() == "40000810")
 		{
-            std::cout << "S-to-D command: " << current->info.Get_Total_Words << " words" << endl;
+            std::cout << "S-to-D command: " << temp->info.Get_Total_Words() << " words" << "\n";
 		}
 		else
 		{
-            std::cout << "D-to-S command: " << current->info.Get_Total_Words << " words" << endl;
+            std::cout << "D-to-S command: " << temp->info.Get_Total_Words() << " words" << "\n";
 		}
         
-        while ()  //is this right im not sure, what arg shall this while loop take
-        {
+        //while ()  //is this right im not sure, what arg shall this while loop take
+        //{
             //cout << "Line" << current->info.Get_Line_Number() << " : " << info.LoopUpTable(data_address,bit_string)<< endl;
-        }
+        //}
         //Display number of words
         //std::cout << info.Get_Total_Words << " words" << endl;
 

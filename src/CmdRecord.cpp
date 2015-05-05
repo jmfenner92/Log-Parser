@@ -102,6 +102,14 @@ std::string CmdRecord::Get_RelTime() const
 	return reltime;
 }
 
+void CmdRecord::Set_Total_Words(int length)
+{
+	int wordsLength = length;
+}
+int CmdRecord::Get_Total_Words() const
+{
+	return wordsLength;
+}
 std::string CmdRecord::HexToBit(std::string hex_string)
 {
 	std::string bit_string = "";

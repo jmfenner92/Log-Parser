@@ -177,7 +177,7 @@ void dataCollection(CmdRecord* curr_record, ifstream& log_file, std::string temp
 		}
 	}
 
-	// curr_record.Set_Total_Words(length);
+	curr_record->Set_Total_Words(length);
 	return;
 }
 

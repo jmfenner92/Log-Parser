@@ -24,9 +24,9 @@ public:
 	void	Set_Address(std::string);
 	std::string	Get_Address() const;
 	void Set_Data(int, std::string);
-	std::vector<std::string> Get_Data() const;    
-    //void	Set_Total_Words(std::string);
-	//std::string	Get_Total_Words() const;
+	std::vector<std::string> Get_Data() const;
+	void Set_Total_Words(int);
+	int Get_Total_Words() const;
 	void	Set_Size(std::string);
 	std::string	Get_Size() const;
 	void	Set_Cycle(std::string);
@@ -45,6 +45,7 @@ private: // All data members are assumed to be strings
 	std::string size;
 	std::string cycle;
 	std::string reltime;
+	int wordsLength;
     //std::string total_words;
 }; // end of CmdRecord class
 
