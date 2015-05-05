@@ -10,6 +10,7 @@
 #include <string>
 #include "CmdRecord.h"
 #include <sstream>
+#include <cmath>
 
 // Taken from http://stackoverflow.com/questions/12975341/to-string-is-not-a-member-of-std-says-so-g
 //in order to fix a bug in to_string. Apparently there needs to be an offical patch? Strange....
@@ -251,14 +252,34 @@ std::string CmdRecord::LookUpTable(int word, int bit_value)
 		break;
 	}
 	case 41: printString += "Word 41: Code = " + patch::to_string(bit_value); break;
-	default: printString += "Error has occurred in lookup"; break;
+	default: printString += ""; break;
 	}
 	// attach endline to string?
-	printString += "\n";
+	//printString += "\n";
 	
 	return printString;
 
 } // end of printString()
+
+//given a bitstring, return the decimal value of the given range
+int CmdRecord::lookAndAdd(std::string bitString, int startRange, int endRange) {
+	int result = 0;
+	std::string str = bitString.substr(startRange, endRange-startRange);
+	int powerCounter = str.length() - 1;
+	int indexCounter = 0;
+	while(powerCounter != -1){
+			if(str[indexCounter] == '0') {
+				indexCounter++;
+				powerCounter--;			
+			}
+			else {
+				result += exp2(powerCounter);
+				indexCounter++;
+				powerCounter--;
+			}
+	}
+	return result;
+}
 
 CmdRecord& CmdRecord::operator=(const CmdRecord &other)
 {

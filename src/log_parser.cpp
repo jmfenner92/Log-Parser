@@ -187,6 +187,7 @@ void dataCollection(CmdRecord* curr_record, ifstream& log_file, std::string temp
 	return;
 }
 
+/*
 //given a bitstring, return the decimal value of the given range
 int lookAndAdd(string bitString, int startRange, int endRange) {
 	int result = 0;
@@ -206,6 +207,7 @@ int lookAndAdd(string bitString, int startRange, int endRange) {
 	}
 	return result;
 }
+*/
 
 //convert us and ns to s
 float timeConverter(string timeString) {

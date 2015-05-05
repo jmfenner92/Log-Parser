@@ -156,7 +156,34 @@ void CmdList::Display() const
 		{
             		std::cout << "D-to-S command: " << temp->info.Get_Total_Words() << " words" << "\n";
 		}
-        
+        int begin = 0;
+	int end = 0;
+	std::vector<std::string> record_data;
+	record_data = temp->info.Get_Data();
+	for(int i = 0; i < temp->info.Get_Total_Words(); i++)
+	{
+		switch(i)
+		{
+		case 0: begin = 13; end = 14; break;
+		case 1: begin = 13; end = 15; break;
+		case 4: begin = 0; end = 0; break;
+		case 5: begin = 0; end = 6; break;
+		case 10: begin = 11; end = 15; break;
+		case 15: begin = 2; end = 2; break;
+		case 22: begin = 3; end = 3; break;
+		case 32: begin = 0; end = 14; break;
+		case 37: begin = 15; end = 15; break;
+		case 38: begin = 14; end = 14; break;
+		case 40: begin = 7; end = 7; break;
+		case 41: begin = 8; end = 14; break;
+		}
+		std::string printString = temp->info.LookUpTable(i, temp->info.lookAndAdd(temp->info.HexToBit(record_data[i]), begin, end));
+		if(printString != "")
+		{
+		std::cout << printString << "\n";
+		}
+	}
+
         //while ()  //is this right im not sure, what arg shall this while loop take
         //{
             //cout << "Line" << current->info.Get_Line_Number() << " : " << info.LoopUpTable(data_address,bit_string)<< endl;

@@ -37,6 +37,7 @@ public:
     	int HexToDec(std::string);
 	std::string LookUpTable(int word, int bit_value);
 	CmdRecord& operator=(const CmdRecord &other);
+	int lookAndAdd(std::string bitString, int startRange, int endRange);
 
 private: // All data members are assumed to be strings
 	std::string line_number;
