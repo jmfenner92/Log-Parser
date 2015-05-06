@@ -1,17 +1,21 @@
-default: log_parser
+# Makefile for Team 5's Final Project CPSC 254, Spring 2016
 
-# Compile CmdList.cpp
-CmdList.o: CmdList.cpp CmdList.h
-	g++ -c CmdList.cpp
+all: log_parser
 
-# Compile CmdRecord.cpp
-CmdRecord.o: CmdRecord.cpp CmdRecord.h
-	g++ -c CmdRecord.cpp
-
-# Compile log_parser.cpp
-log_parser.o: log_parser.cpp CmdRecord.o CmdList.o
-	g++ -c log_parser.cpp
-
-# Link the object files into executable
+# link the object files into executable
 log_parser: log_parser.o CmdRecord.o CmdList.o
-	g++ log_parser.o CmdRecord.o CmdList.o -o log_parser
+	g++ log_parser.o CmdRecord.o CmdList.o -o bin/log_parser
+	rm *.o
+
+# compile log_parser.cpp
+log_parser.o: CmdRecord.o CmdList.o
+	g++ -c src/log_parser.cpp
+
+# compile CmdRecord.cpp
+CmdRecord.o: 
+	g++ -c src/CmdRecord.cpp
+
+# compile CmdList.cpp
+CmdList.o: 
+	g++ -c src/CmdList.cpp
+
